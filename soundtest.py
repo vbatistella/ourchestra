@@ -1,6 +1,8 @@
 from FoxDot import *
 
+Clock.set_time(7)
 Scale.default = "chromatic"
+Root.default = 0
 
 def major_scale(note):
     major = [note, note+2, note+4, note+5, note+7, note+9, note+11, note+12]

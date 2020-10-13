@@ -26,6 +26,6 @@ def chord(chord_roots = [], durations = []):
         print(notes)
         print(duration)
     
-    #handy-dandy chord-making function
+    #handy-dandy chord-making function that does stuff in parser haha
 
     c1 >> pluck(chords, dur=durations)

@@ -34,7 +34,7 @@ function onMessageHandler (target, context, msg, self) {
   // Commands
   switch (commandName) {
     case '!oi':
-      client.say(target, 'pau no cu de quem ta lendo.');
+      client.say(target, 'did you ever hear the tragedy of darth plagueis the wise? i thought not. it is not a story the jedi would tell you.');
       console.log('* Executed !oi command');
       data.push("oi");
       break;

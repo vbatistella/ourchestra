@@ -1,4 +1,5 @@
 from FoxDot import *
+import time
 
 Clock.set_time(7)
 Scale.default = "chromatic"
@@ -16,16 +17,35 @@ x1 - the drum track, I really don't think it cares about the instrument, it just
 
 def single_note(notes = [], durations = []):
     if DEBUG:
+        print("i am going to play the following notes")
         print(notes)
         print(durations)
-    m1 >> pluck(notes, dur = [durations])
 
-def chord(chord_roots = [], durations = []):
+    m1 >> pluck(notes, dur =durations)
+
+def chord(chords = [], durations = []):
     if DEBUG:
-        print(chord_root)
-        print(notes)
+        print("i am going to play the follwoing chords:")
+        print(chords)
         print(duration)
-    
-    #handy-dandy chord-making function that does stuff in parser haha
 
     c1 >> pluck(chords, dur=durations)
+
+def beats(groove = "- - "):
+    if DEBUG:
+        print("i am going to play the following groove:")
+        print(groove)
+
+    x1 >> play(groove)
+
+def main():
+    DEBUG = True
+    beats()
+    time.sleep(4)
+    beats("x-o-")
+    Go()
+    time.sleep(2) #this doesnt work lol
+    beats("xxxx")
+
+if __name__ == "__main__":
+    main()

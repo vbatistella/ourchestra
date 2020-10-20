@@ -31,17 +31,21 @@ function onMessageHandler (target, context, msg, self) {
 
   const commandName = msg.trim();
 
-  // Commands
+  // No argument commands
   switch (commandName) {
     case '!oi':
       client.say(target, 'did you ever hear the tragedy of darth plagueis the wise? i thought not. it is not a story the jedi would tell you.');
       console.log('* Executed !oi command');
-      data.push("oi");
       break;
     case '!kill':
       client.say(target, 'why tho?');
       console.log('* Executed !kill command');
       break;
+    default:
+      // Other commands
+      if (commandName.startsWith("!")) {
+        data.push(commandName);
+      }
   }
 }
 

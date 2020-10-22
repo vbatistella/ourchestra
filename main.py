@@ -1,30 +1,40 @@
-MAX_TEMPO  = 8
-MAX_BASE   = 16
-MAX_SAMPLE = 2
+from FoxDot import *
 
-melody = [0]*MAX_TEMPO
-base   = [[0]*MAX_BASE  ]*MAX_BASE
-beats  = [0]*MAX_TEMPO
-sample = [[0]*MAX_SAMPLE]*MAX_SAMPLE
+# I'm putting this here because I think it can hypothetically make a difference in a bizarre corner case
+Clock.set_time(7)
+Scale.default = "chromatic"
+Root.default = 0
 
-queue = []
-note_at = 0
+running = True
 
-def add_queue(item):
-    queue.append(item)
+# Kickers
+# Kickers decide whether or not the queues can be dequeued and actually sent to our "tocator"
 
-def pop_queue():
-    return queue.pop(0)
+def melody_kicker(queue):
+    pass
 
-def clear_queue():
-    queue = []
+def chord_kicker(queue):
+    pass
+
+def drum_kicker(queue):
+    pass
 
 def main():
-    add_queue("aa")
+    print("é hora, meus bacanos")
 
-def add_note(channel, note, tempo):
-    if channel == 1:
-        melody[channel] = 
+    melody_queue = []
+    chord_queue = []
+    drum_queue = []
+    
+    # This starts FoxDot, the question is "when"
+    Go()
+
+    # This is where we will be constantly checking for messages and actually do stuff
+    while(running):
+        pass
+
+    print("'tis the end, fellas")
+
 
 if __name__ == "__main__":
     main()

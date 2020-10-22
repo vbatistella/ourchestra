@@ -41,11 +41,12 @@ def beats(groove = "- - "):
 def main():
     DEBUG = True
     beats()
-    time.sleep(4)
-    beats("x-o-")
-    Go()
-    time.sleep(2) #this doesnt work lol
-    beats("xxxx")
+    time.sleep(3)
+    beats("1234")
+    time.sleep(3)
+    beats("--xo")
+    time.sleep(3)
+    print("tubérculo")
 
 if __name__ == "__main__":
     main()

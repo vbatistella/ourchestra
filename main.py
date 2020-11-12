@@ -18,12 +18,50 @@ running = True
 # Kickers decide whether or not the queues can be dequeued and actually sent to our "tocator"
 
 def melody_kicker(queue):
-    """returns a pair of lists to play with strum()"""
-    return None
+    """returns a pair of lists (in a tuple) to play with strum()"""
+    n = []
+    l = []
+    total = 0
+    out = 0
+    for note in queue:
+        if total+note[1] <= 4:
+            n.append(note[0])
+            l.append(note[1])
+            total += note[1]
+            out+=1
+        else:
+            break
+
+    for i in range(out):
+        queue.pop(i)
+
+    if n and l:
+        return (n, l)
+    else:
+        return None
 
 def chord_kicker(queue):
-    """returns a pair of lists to play with strum()"""
-    return None
+    """returns a pair of lists (in a tuple) to play with strum()"""
+    c = []
+    l = []
+    total = 0
+    out = 0
+    for chord in queue:
+        if total+chord[1] <= 4:
+            c.append(chord[0])
+            l.append(chord[1])
+            total += chord[1]
+            out+=1
+        else:
+            break
+
+    for i in range(out):
+        queue.pop(i)
+
+    if c and l:
+        return (c, l)
+    else:
+        return None
 
 def drum_kicker(queue):
     """returns a string to play with play()"""
@@ -46,9 +84,18 @@ def main():
     # This is where we will be constantly checking for messages and actually do stuff
     while(running):
         _, beat = (int(Clock.now()), tempo)
-        #here goes the code that fetches input
-        pass
-        # 
+
+        #here we fetch the input and, if there is any, parse it
+        chat = parser.read_chat()
+        if chat:
+            for message in chat:
+                entry = parser.parse(message)
+                if entry[0] == "m":
+                    melody_queue.append(entry[1])
+                elif entry[0] == "c":
+                    chord_queue.append(entry[1])
+                elif entry[0] == "x":
+                    drum_queue.append(entry[1])
 
         if beat == 3 and not t:
             t = True
@@ -60,9 +107,9 @@ def main():
             chords = chord_kicker(chord_queue)
             drums = drum_kicker(drum_queue)
             if melody:
-                tocator.single_note(melody)
+                tocator.single_note(melody[0], melody[1])
             if chords:
-                tocator.chord(chords)
+                tocator.chord(chords[0], chords[1])
             if drums:
                 tocator.beats(drums)
             t = False

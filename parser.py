@@ -107,7 +107,7 @@ def parse(command):
     else:
         return None
     
-    return fox_note
+    return (command, fox_note)
 
 def main():
     chat = ["!c C#6m 0.5"] #read_chat()

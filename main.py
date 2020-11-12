@@ -9,7 +9,7 @@ Clock.set_time(7)
 Scale.default = "chromatic" #we want chromatic because it has all of our western notes
 Root.default = 0 #C
 
-Clock.bpm = 100
+Clock.bpm = 80
 
 DEBUG = True
 running = True
@@ -21,44 +21,65 @@ def melody_kicker(queue):
     """returns a pair of lists (in a tuple) to play with strum()"""
     n = []
     l = []
+    kick = False
     total = 0
     out = 0
+    print("a queueue eh")
+    print(queue)
     for note in queue:
-        if total+note[1] <= 4:
-            n.append(note[0])
-            l.append(note[1])
-            total += note[1]
-            out+=1
-        else:
-            break
+        if note:
+            if total+note[1] <= 4:
+                n.append(note[0])
+                l.append(note[1])
+                total += note[1]
+                out+=1
+                print('vou adicionar pra kickar %s e %d' % (note[0], note[1]))
+            if total+note[1] >= 4:
+                print('kickin time bois')
+                kick = True
+                break
 
-    for i in range(out):
-        queue.pop(i)
+    print("passei do for e vou printar a queueue de novo")
+    print(queue)
 
-    if n and l:
+    if kick:
+        for i in range(out):
+            if queue:
+                queue.pop(0)
+
+    print("passei do kick e a queueueue eh")
+    print(queue)
+
+    if n and l and kick:
         return (n, l)
     else:
+        print('nao quero tocar ainda meu jovem')
         return None
 
 def chord_kicker(queue):
     """returns a pair of lists (in a tuple) to play with strum()"""
     c = []
     l = []
+    kick = False
     total = 0
     out = 0
     for chord in queue:
-        if total+chord[1] <= 4:
-            c.append(chord[0])
-            l.append(chord[1])
-            total += chord[1]
-            out+=1
-        else:
-            break
+        if chord:
+            if total+chord[1] <= 4:
+                c.append(chord[0])
+                l.append(chord[1])
+                total += chord[1]
+                out+=1
+            elif total+chord[1] >= 4:
+                print('chord kickin my dudes')
+                kick = True
+                break
 
-    for i in range(out):
-        queue.pop(i)
+    if kick:
+        for i in range(out):
+            queue.pop(0)
 
-    if c and l:
+    if c and l and kick:
         return (c, l)
     else:
         return None
@@ -90,12 +111,13 @@ def main():
         if chat:
             for message in chat:
                 entry = parser.parse(message)
-                if entry[0] == "m":
-                    melody_queue.append(entry[1])
-                elif entry[0] == "c":
-                    chord_queue.append(entry[1])
-                elif entry[0] == "x":
-                    drum_queue.append(entry[1])
+                if entry[1]:
+                    if entry[0] == "m":
+                        melody_queue.append(entry[1])
+                    elif entry[0] == "c":
+                        chord_queue.append(entry[1])
+                    elif entry[0] == "x":
+                        drum_queue.append(entry[1])
 
         if beat == 3 and not t:
             t = True

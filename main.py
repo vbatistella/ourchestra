@@ -19,73 +19,88 @@ running = True
 
 def melody_kicker(queue):
     """returns a pair of lists (in a tuple) to play with strum()"""
+    if DEBUG:
+        print("Melody Kicker")
     n = []
     l = []
     kick = False
     total = 0
-    out = 0
-    print("a queueue eh")
-    print(queue)
+    out = []
+    if DEBUG:
+        print("Queue:")
+        print(queue)
     for note in queue:
         if note:
             if total+note[1] <= 4:
                 n.append(note[0])
                 l.append(note[1])
                 total += note[1]
-                out+=1
-                print('vou adicionar pra kickar %s e %d' % (note[0], note[1]))
-            if total+note[1] >= 4:
-                print('kickin time bois')
+                out.append(note)
+                if DEBUG:
+                    print('vou adicionar pra kickar %s, %d' % (note[0], note[1]))
+            if total >= 4:
+                if DEBUG:
+                    print('Setando Kick = True')
                 kick = True
                 break
 
-    print("passei do for e vou printar a queueue de novo")
-    print(queue)
-
     if kick:
-        for i in range(out):
+        for i in out:
             if queue:
-                queue.pop(0)
-
-    print("passei do kick e a queueueue eh")
-    print(queue)
+                if DEBUG:
+                    print("Removendo da queue %s" %(str(queue[0])))
+                queue.remove(i)
 
     if n and l and kick:
         return (n, l)
     else:
-        print('nao quero tocar ainda meu jovem')
+        print('Nada para tocar')
         return None
 
 def chord_kicker(queue):
     """returns a pair of lists (in a tuple) to play with strum()"""
+    if DEBUG:
+        print("Chord Kicker")
     c = []
     l = []
     kick = False
     total = 0
-    out = 0
+    out = []
+    if DEBUG:
+        print("Queue:")
+        print(queue)
     for chord in queue:
         if chord:
             if total+chord[1] <= 4:
                 c.append(chord[0])
                 l.append(chord[1])
                 total += chord[1]
-                out+=1
-            elif total+chord[1] >= 4:
-                print('chord kickin my dudes')
+                out.append(xhord)
+                if DEBUG:
+                    print('vou adicionar pra kickar %s, %d' % (chord[0], chord[1]))
+            if total >= 4:
+                if DEBUG:
+                    print('Setando Kick = True')
                 kick = True
                 break
 
     if kick:
-        for i in range(out):
-            queue.pop(0)
+        for i in out:
+            if queue:
+                if DEBUG:
+                    print("Removendo da queue %s" %(str(queue[0])))
+                queue.remove(i)
 
     if c and l and kick:
         return (c, l)
     else:
+        print('Nada para tocar')
         return None
 
 def drum_kicker(queue):
     """returns a string to play with play()"""
+    if DEBUG:
+        print("Drum Kicker")
     return None
 
 def main():
@@ -111,7 +126,7 @@ def main():
         if chat:
             for message in chat:
                 entry = parser.parse(message)
-                if entry[1]:
+                if entry:
                     if entry[0] == "m":
                         melody_queue.append(entry[1])
                     elif entry[0] == "c":
@@ -124,7 +139,7 @@ def main():
 
         if beat == 4 and t: #every 4th beat we check if we can change our players
             if DEBUG:
-                print('beat 4')
+                print('==================NOVO COMPASSO==================')
             melody = melody_kicker(melody_queue)
             chords = chord_kicker(chord_queue)
             drums = drum_kicker(drum_queue)
@@ -135,8 +150,6 @@ def main():
             if drums:
                 tocator.beats(drums)
             t = False
-
-    print("'tis the end, fellas")
 
 
 if __name__ == "__main__":

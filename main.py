@@ -132,7 +132,7 @@ def drum_kicker(queue):
                 if DEBUG:
                     print("Removendo da queue %s" %(str(queue[0])))
                 phrase = i[0]
-                times = i[1]
+                times = int(i[1])
                 for _ in range(times):
                     groove += '['+phrase+']'
                 queue.remove(i)

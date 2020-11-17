@@ -1,7 +1,7 @@
 from FoxDot import *
 
 def main():
-    print("Ourchestra Version 0.5")
+    print("Ourchestra Version 1.0")
     Go()
     print("Ourchestra terminated")
 

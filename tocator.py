@@ -36,7 +36,7 @@ def chord(chords = [], durations = []):
 def beats(groove = "- - "):
     if DEBUG:
         print("i am going to play the following groove:")
-        print(groove)
+        print(groove, dur=1)
 
     x1 >> play(groove)
 

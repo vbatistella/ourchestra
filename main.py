@@ -3,6 +3,7 @@ import subprocess
 import math
 import parser
 import tocator
+import argparse
 
 # I'm putting this here because I think it can hypothetically make a difference in a bizarre corner case
 Clock.set_time(7)
@@ -52,9 +53,10 @@ def melody_kicker(queue):
                 queue.remove(i)
 
     if n and l and kick:
+        print("Tocando %s %s" % (str(n), str(l)))
         return (n, l)
     else:
-        print('Nada para tocar')
+        print('Nenhuma melodia nova para tocar')
         return None
 
 def chord_kicker(queue):
@@ -92,9 +94,10 @@ def chord_kicker(queue):
                 queue.remove(i)
 
     if c and l and kick:
+        print("Tocando %s %s" % (str(c), str(l)))
         return (c, l)
     else:
-        print('Nada para tocar')
+        print('Nenhum acorde novo para tocar')
         return None
 
 def drum_kicker(queue):
@@ -105,6 +108,16 @@ def drum_kicker(queue):
 
 def main():
     global running
+    global DEBUG
+
+    args = argparse.ArgumentParser(description='Play music, requires supercollider to be runnning FoxDot and chat.js to be running')
+    args.add_argument("-d", action="store_true", help="runs in debug mode")
+    arglist = vars(args.parse_args())
+
+    DEBUG = arglist['d']
+
+    if DEBUG:
+        print('Running in debug mode')
 
     #user inputs via chat
     melody_queue = []

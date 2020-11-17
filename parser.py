@@ -26,6 +26,25 @@ def validate_tempo(tempo):
         return None
     return tempo
 
+def check_balance(myStr): 
+    open_list = ["[", "<"] 
+    close_list = ["]", ">"] 
+    stack = [] 
+    for i in myStr: 
+        if i in open_list: 
+            stack.append(i) 
+        elif i in close_list: 
+            pos = close_list.index(i) 
+            if ((len(stack) > 0) and
+                (open_list[pos] == stack[len(stack)-1])): 
+                stack.pop() 
+            else: 
+                return False
+    if len(stack) == 0: 
+        return True
+    else: 
+        return False
+
 # Check if melody note is valid
 def is_valid_m(note):
     in_notes  = note[:-1] in NOTES
@@ -39,7 +58,17 @@ def is_valid_m(note):
     return valid
 
 def is_valid_d(note):
-    return note in DRUMS
+    if not check_balance(note):
+        print("Unbalanced drums parentheses.")
+        return False
+    for i in range(len(note)):
+        if not note[i] in DRUMS:
+            print("Non-existent drum character.")
+            return False
+    return True
+
+def validate_drum_tempo(tempo):
+    return tempo in [1,2,3,4]
 
 def get_note(note):
     note_ref  = NOTES[note[:-1]]
@@ -67,14 +96,16 @@ def chord_maker(command, note, tempo):
     if minor:
         third -= 1
     fifth = note_ref+7
-    return ((note_ref, third, fifth), tempo)
-    
-    
+    return ((note_ref, third, fifth), tempo)    
 
 def drum_maker(command, note, tempo):
+    if not validate_drum_tempo(tempo):
+        print("Drum tempo not valid.")
+        return None
     if not is_valid_d(note):
         print('Drum note not valid.')
         return None
+    note = note.replace("."," ")
     return (note, tempo)
 
 def send_foxdot(fox_note):
@@ -106,11 +137,13 @@ def parse(command):
         fox_note = drum_maker(command, note, tempo)
     else:
         return None
+    if fox_note is None:
+        return None
     
     return (command, fox_note)
 
 def main():
-    chat = ["!c C#6m 0.5"] #read_chat()
+    chat = ["!x x.[x-]<x!> 4"] #read_chat()
     for command in chat:
         # try:
         fox_note = parse(command)

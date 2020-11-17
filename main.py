@@ -77,7 +77,7 @@ def chord_kicker(queue):
                 c.append(chord[0])
                 l.append(chord[1])
                 total += chord[1]
-                out.append(xhord)
+                out.append(chord)
                 if DEBUG:
                     print('vou adicionar pra kickar %s, %d' % (chord[0], chord[1]))
             if total >= 4:
@@ -104,7 +104,46 @@ def drum_kicker(queue):
     """returns a string to play with play()"""
     if DEBUG:
         print("Drum Kicker")
-    return None
+    groove = ''
+    kick = False
+    total = 0
+    out = []
+
+    if DEBUG:
+        print("Queue:")
+        print(queue)
+
+    for phrase in queue:
+        if phrase:
+            if total+phrase[1] <= 4:
+                total += phrase[1]
+                out.append(phrase)
+                if DEBUG:
+                    print('vou adicionar pra kickar %s, %d' % (phrase[0], phrase[1]))
+            if total >= 4:
+                if DEBUG:
+                    print('Setando Kick = True')
+                kick = True
+                break
+
+    if kick:
+        for i in out:
+            if queue:
+                if DEBUG:
+                    print("Removendo da queue %s" %(str(queue[0])))
+                phrase = i[0]
+                times = i[1]
+                for _ in range(times):
+                    groove += '['+phrase+']'
+                queue.remove(i)
+
+    if len(groove) > 0 and kick:
+        print("Tocando %s" % (groove))
+        return (groove)
+    else:
+        print('Nenhuma percussão nova para tocar')
+        return None
+    
 
 def main():
     global running

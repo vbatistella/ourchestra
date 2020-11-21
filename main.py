@@ -146,6 +146,8 @@ def main():
     global running
     global DEBUG
 
+    print("Starting Ourchestra...")
+
     args = argparse.ArgumentParser(description='Play music, requires supercollider to be runnning FoxDot and chat.js to be running')
     args.add_argument("-d", action="store_true", help="runs in debug mode")
     arglist = vars(args.parse_args())
@@ -164,7 +166,9 @@ def main():
     t = False
 
     
-    pid = subprocess.Popen(['python3', 'maestro.py']) #starts FoxDot
+    chat = subprocess.Popen(['node', 'chat.js', '&']) #starts chat reader
+    time.sleep(5)
+    maestro = subprocess.Popen(['python3', 'maestro.py']) #starts FoxDot
 
     # This is where we will be constantly checking for messages and actually do stuff
     while(running):

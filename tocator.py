@@ -23,7 +23,7 @@ def single_note(notes = [], durations=[]):
         print(notes)
         print(durations)
 
-    m1 >> pluck(notes, dur=durations)
+    m1 >> viola(notes, dur=durations)
 
 def chord(chords = [], durations = []):
     if DEBUG:
@@ -36,9 +36,9 @@ def chord(chords = [], durations = []):
 def beats(groove = "- - "):
     if DEBUG:
         print("i am going to play the following groove:")
-        print(groove, dur=1)
+        print(groove)
 
-    x1 >> play(groove)
+    x1 >> play(groove, dur=1)
 
 def main():
     DEBUG = True
@@ -48,7 +48,7 @@ def main():
     time.sleep(3)
     beats("--xo")
     time.sleep(3)
-    print("tubérculo")
+    print("end")
 
 if __name__ == "__main__":
     main()

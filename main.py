@@ -56,7 +56,6 @@ def melody_kicker(queue):
         print("Tocando %s %s" % (str(n), str(l)))
         return (n, l)
     else:
-        print('Nenhuma melodia nova para tocar')
         return None
 
 def chord_kicker(queue):
@@ -97,7 +96,6 @@ def chord_kicker(queue):
         print("Tocando %s %s" % (str(c), str(l)))
         return (c, l)
     else:
-        print('Nenhum acorde novo para tocar')
         return None
 
 def drum_kicker(queue):
@@ -141,7 +139,6 @@ def drum_kicker(queue):
         print("Tocando %s" % (groove))
         return (groove)
     else:
-        print('Nenhuma percussão nova para tocar')
         return None
     
 

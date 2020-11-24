@@ -10,9 +10,10 @@ Clock.set_time(7)
 Scale.default = "chromatic" #we want chromatic because it has all of our western notes
 Root.default = 0 #C
 
-Clock.bpm = 80
+Clock.bpm = 100
 
 DEBUG = True
+WATCH = True
 running = True
 
 # Kickers
@@ -20,14 +21,14 @@ running = True
 
 def melody_kicker(queue):
     """returns a pair of lists (in a tuple) to play with strum()"""
-    if DEBUG:
+    if DEBUG or WATCH:
         print("Melody Kicker")
     n = []
     l = []
     kick = False
     total = 0
     out = []
-    if DEBUG:
+    if DEBUG or WATCH:
         print("Queue:")
         print(queue)
     for note in queue:
@@ -60,14 +61,14 @@ def melody_kicker(queue):
 
 def chord_kicker(queue):
     """returns a pair of lists (in a tuple) to play with strum()"""
-    if DEBUG:
+    if DEBUG or WATCH:
         print("Chord Kicker")
     c = []
     l = []
     kick = False
     total = 0
     out = []
-    if DEBUG:
+    if DEBUG or WATCH:
         print("Queue:")
         print(queue)
     for chord in queue:
@@ -100,14 +101,14 @@ def chord_kicker(queue):
 
 def drum_kicker(queue):
     """returns a string to play with play()"""
-    if DEBUG:
+    if DEBUG or WATCH:
         print("Drum Kicker")
     groove = ''
     kick = False
     total = 0
     out = []
 
-    if DEBUG:
+    if DEBUG or WATCH:
         print("Queue:")
         print(queue)
 
@@ -150,9 +151,11 @@ def main():
 
     args = argparse.ArgumentParser(description='Play music, requires supercollider to be runnning FoxDot and chat.js to be running')
     args.add_argument("-d", action="store_true", help="runs in debug mode")
+    args.add_argument("-w", action="store_true", help="runs in watchlist mode")
     arglist = vars(args.parse_args())
 
     DEBUG = arglist['d']
+    WATCH = arglist['w']
 
     if DEBUG:
         print('Running in debug mode')
